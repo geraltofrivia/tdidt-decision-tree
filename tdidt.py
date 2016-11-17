@@ -1,3 +1,4 @@
+from pprint import pprint
 import csv
 import math
 
@@ -7,6 +8,9 @@ columns = None
 X = []
 Y = []
 
+#IMPORTANT PART
+tree = {}
+
 def entropy(_list):
 	'''
 		Compute the H(X) value for a given list
@@ -15,9 +19,8 @@ def entropy(_list):
 	val = 0.0
 	print normalized_list
 	for x in normalized_list:
-		if x == 0:
-			continue
-		val += x*math.log(1/x,2)
+		if x != 0:	
+			val += x*math.log(1/x,2)
 	return val
 
 
@@ -86,7 +89,7 @@ def split(_attribute, _class):
 	#Return the value i (left: less than i, right: more than or equal to i) and the , corresponding value of information gain
 	return (A[best_tuple[0]], best_tuple[1])
 
-def tfidt(_data, _class, _depth):
+def tdidt(_data, _class, _depth, _tree):
 
 	#Exit condition
 	if _depth >= max_depth:
@@ -101,37 +104,36 @@ def tfidt(_data, _class, _depth):
 	best_attr = max(best_attr_candidates,key=lambda item:item[1])[0]
 	#Format: threshold, information gain, attribute number
 
+	#TIME TO FILL IN ZE TREE!
+	tree['attribute_id'] = best_attr[2]
+	tree['attribute_name'] = columns[best_attr[2]]
+	tree['threshold'] = best_attr[0]
+	tree['children'] = []
+	tree['samples'] = len(_data)
+
 	#Divide the data based on this attribute
 	data1 = []
 	data2 = []
 	class1 = []
 	class2 = []
 
-	for row in _data:
-		if row[best_attr[2]] < best_attr[0]:
-			
+	for i in range(len(_data)):
+		if _data[i][best_attr[2]] < best_attr[0]:
+			#left node
+			data1.append(_data[i])
+			class1.append(_class[i])
+		else:
+			#right node
+			data2.append(_data[i])
+			class2.append(_data[i])
 
-
-
-
-
+	#Recursion follows:
+	tree['children'].append({})
+	attribute_left = tdidt(data1,class1,_depth+1, tree['children'][0])
+	tree['children'].append({})
+	attribute_right = tdidt(data2,class2,_depth+1, tree['children'][0])
 
 	
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
 if __name__ == '__main__':
 	for row in data:
 		
@@ -143,4 +145,6 @@ if __name__ == '__main__':
 		X.append(x)
 		Y.append(y)
 	
-	information_gain(['O','O','R','S','S','R','O','O'],['Y','Y','Y','Y','N','N','Y','N'])
+	# information_gain(['O','O','R','S','S','R','O','O'],['Y','Y','Y','Y','N','N','Y','N'])
+	tdidt(X,Y,0,tree)
+	pprint(tree)
