@@ -1,6 +1,7 @@
 from pprint import pprint
-import csv
+import pickle
 import math
+import csv
 
 max_depth = 3
 data = csv.reader(open('data/gene_expression_training.csv'))
@@ -17,7 +18,7 @@ def entropy(_list):
 	'''	
 	normalized_list = [x/float(sum(_list)) for x in _list]
 	val = 0.0
-	print normalized_list
+	# print normalized_list
 	for x in normalized_list:
 		if x != 0:	
 			val += x*math.log(1/x,2)
@@ -46,10 +47,10 @@ def information_gain(_attribute, _class):
 
 	#Compute H(S)
 	h_s = 0.0
-	f_attribute = [ 0 for x in range(len(C))]
+	freq_attribute = [ 0 for x in range(len(C))]
 	for i in range(len(C)):
-		f[i] += sum([x[i] for x in M])
-	h_s = entropy(f)
+		freq_attribute[i] += sum([x[i] for x in M])
+	h_s = entropy(freq_attribute)
 
 	#Compute H(S/A)
 	h_s_a = 0.0
@@ -63,9 +64,9 @@ def split(_attribute, _class):
 	'''
 		Convert a continous value attribute to discrete
 	'''
-	
+
 	#Make a list of (attribute,class) tuple
-	data = sorted([ (_attribute[i],_class[i]) for i in len(_attribute) ], key = lambda tup: tup[0])
+	data = sorted([ (_attribute[i],_class[i]) for i in range(len(_attribute)) ], key = lambda tup: tup[0])
 
 	#I know it's an overhead but for the sake of coder's sanity, i'm gonna use this information to basically split this list into two lists
 	A = [x[0] for x in data]
@@ -79,37 +80,43 @@ def split(_attribute, _class):
 	for i in range(1,len(A)):
 		if not C[i] == previous_class:
 			#Treat 'i' as a split candidate.
-			a = [0 for i in range(len(A[:i]))] + [1 for i in range(len(A[i:]))]
+			a = [0 for x in A[:i]] + [1 for x in A[i:]]
 			split_candidates.append((i, information_gain(a,C)))
 		previous_class = C[i]
 
 	#Find the split with the maximum information gain
-	best_tuple = max(split_candidates,key=lambda item:item[1])[0]
+	best_tuple = max(split_candidates,key=lambda item:item[1])
 
 	#Return the value i (left: less than i, right: more than or equal to i) and the , corresponding value of information gain
-	return (A[best_tuple[0]], best_tuple[1])
+	return [A[best_tuple[0]], best_tuple[1]]
 
 def tdidt(_data, _class, _depth, _tree):
 
 	#Exit condition
 	if _depth >= max_depth:
-		#Do something
-		pass
+		_tree['name'] = "LEAF"
+		_tree['children'] = []
+		_tree['label'] = max(set(_class), key = _class.count)
+		return None
 
+	#For every attribute, compute the information gain (using best split for that attribute)
 	best_attr_candidates = []
 	for i in range(len(_data[0])):
-		best_attr_candidates.append(split([x[i] for x in _data],_class).append(i))
+		best_attr_candidates.append(split([x[i] for x in _data],_class)+[i])
+
+	# pprint(best_attr_candidates)
+	# raw_input()
 
 	#Best attribute, based on the maximum information gain
-	best_attr = max(best_attr_candidates,key=lambda item:item[1])[0]
+	best_attr = max(best_attr_candidates,key=lambda item:item[1])
 	#Format: threshold, information gain, attribute number
 
 	#TIME TO FILL IN ZE TREE!
-	tree['attribute_id'] = best_attr[2]
-	tree['attribute_name'] = columns[best_attr[2]]
-	tree['threshold'] = best_attr[0]
-	tree['children'] = []
-	tree['samples'] = len(_data)
+	_tree['attribute_id'] = best_attr[2]
+	_tree['name'] = columns[best_attr[2]]
+	_tree['threshold'] = best_attr[0]
+	_tree['samples'] = len(_data)
+	_tree['children'] = []
 
 	#Divide the data based on this attribute
 	data1 = []
@@ -125,13 +132,17 @@ def tdidt(_data, _class, _depth, _tree):
 		else:
 			#right node
 			data2.append(_data[i])
-			class2.append(_data[i])
+			class2.append(_class[i])
 
 	#Recursion follows:
-	tree['children'].append({})
-	attribute_left = tdidt(data1,class1,_depth+1, tree['children'][0])
-	tree['children'].append({})
-	attribute_right = tdidt(data2,class2,_depth+1, tree['children'][0])
+	#LEFT
+	_tree['children'].append({})
+	tdidt(data1,class1,_depth+1, _tree['children'][-1])
+	#RIGHT
+	_tree['children'].append({})
+	tdidt(data2,class2,_depth+1, _tree['children'][-1])
+
+	return None
 
 	
 if __name__ == '__main__':
@@ -148,3 +159,4 @@ if __name__ == '__main__':
 	# information_gain(['O','O','R','S','S','R','O','O'],['Y','Y','Y','Y','N','N','Y','N'])
 	tdidt(X,Y,0,tree)
 	pprint(tree)
+	pickle.dump(tree, open('trained_tree.pickle','w+'))
