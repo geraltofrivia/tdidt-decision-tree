@@ -1,4 +1,6 @@
 from pprint import pprint
+import graphviz as gv
+import random
 import pickle
 import math
 import csv
@@ -95,6 +97,8 @@ def tdidt(_data, _class, _depth, _tree):
 	#Exit condition
 	if _depth >= max_depth:
 		_tree['name'] = "LEAF"
+		_tree['depth'] = _depth
+		_tree['samples'] = len(_class)
 		_tree['children'] = []
 		_tree['label'] = max(set(_class), key = _class.count)
 		return None
@@ -114,9 +118,10 @@ def tdidt(_data, _class, _depth, _tree):
 	#TIME TO FILL IN ZE TREE!
 	_tree['attribute_id'] = best_attr[2]
 	_tree['name'] = columns[best_attr[2]]
-	_tree['threshold'] = best_attr[0]
+	_tree['threshold'] = float(best_attr[0])
 	_tree['samples'] = len(_data)
 	_tree['children'] = []
+	_tree['depth'] = _depth
 
 	#Divide the data based on this attribute
 	data1 = []
@@ -144,6 +149,39 @@ def tdidt(_data, _class, _depth, _tree):
 
 	return None
 
+def visualize():
+	tree_visualized = gv.Digraph(format='svg',engine='dot')
+	visualizing_traversal(tree, 'ROOT', tree_visualized)
+	return tree_visualized
+
+def visualizing_traversal(node, parent_name, tree_visualized):
+	if node['name'] == 'LEAF':
+		tree_visualized.attr('node', shape='ellipse')
+		name = parent_name+str(random.randint(1,100000))
+		if node['label'] > 0.9:
+			label = ''' trisome || samples = %(samples)d''' % {'samples': node['samples']}
+		else:
+			label = ''' healthy || samples = %(samples)d''' % {'samples': node['samples']}
+		#Do something else
+		tree_visualized.node(name, label)
+		tree_visualized.edge(parent_name, name)
+		return
+
+	tree_visualized.attr('node', shape='box')
+	#create the unique identifier
+	name = node['name']+'_'+str(node['depth'])
+	# pprint(node)
+	# raw_input()
+	label = '''%(property_name)s <= %(threshold)s || samples = %(samples)d''' % {'property_name': node['name'],'threshold':str(node['threshold']),'samples':node['samples']}
+	tree_visualized.node(name = name, label = label)
+
+	#for creating the edge
+	if not parent_name == 'ROOT':
+		tree_visualized.edge(parent_name, name)
+
+	#DFS Recursion time!
+	for children in node['children']:
+		visualizing_traversal(children, name, tree_visualized)
 	
 if __name__ == '__main__':
 	for row in data:
@@ -155,8 +193,14 @@ if __name__ == '__main__':
 		x, y = row[:-1], row[-1]
 		X.append(x)
 		Y.append(y)
-	
-	# information_gain(['O','O','R','S','S','R','O','O'],['Y','Y','Y','Y','N','N','Y','N'])
+
+	#Save the tree	
 	tdidt(X,Y,0,tree)
-	pprint(tree)
-	pickle.dump(tree, open('trained_tree.pickle','w+'))
+	# pprint(tree)
+	pickle.dump(tree, open('output/trained_tree.pickle','w+'))
+
+	#Save visualization
+	gv = visualize()
+	f = open('output/tree.dot','w+')
+	f.write(gv.source)
+	f.close()

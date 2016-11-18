@@ -1,0 +1,46 @@
+digraph {
+	node [shape=box]
+	APP_0 [label="APP <= 0.399 || samples = 701"]
+	node [shape=box]
+	pMTOR_1 [label="pMTOR <= 0.6064 || samples = 319"]
+		APP_0 -> pMTOR_1
+	node [shape=box]
+	S6_2 [label="S6 <= 0.3932 || samples = 33"]
+		pMTOR_1 -> S6_2
+	node [shape=ellipse]
+	S6_274632 [label=" trisome || samples = 2"]
+		S6_2 -> S6_274632
+	node [shape=ellipse]
+	S6_224187 [label=" trisome || samples = 31"]
+		S6_2 -> S6_224187
+	node [shape=box]
+	GluR3_2 [label="GluR3 <= 0.2046 || samples = 286"]
+		pMTOR_1 -> GluR3_2
+	node [shape=ellipse]
+	GluR3_275282 [label=" trisome || samples = 100"]
+		GluR3_2 -> GluR3_275282
+	node [shape=ellipse]
+	GluR3_298175 [label=" trisome || samples = 186"]
+		GluR3_2 -> GluR3_298175
+	node [shape=box]
+	AMPKA_1 [label="AMPKA <= 0.385 || samples = 382"]
+		APP_0 -> AMPKA_1
+	node [shape=box]
+	pNUMB_2 [label="pNUMB <= 0.3653 || samples = 211"]
+		AMPKA_1 -> pNUMB_2
+	node [shape=ellipse]
+	pNUMB_219723 [label=" trisome || samples = 143"]
+		pNUMB_2 -> pNUMB_219723
+	node [shape=ellipse]
+	pNUMB_23127 [label=" trisome || samples = 68"]
+		pNUMB_2 -> pNUMB_23127
+	node [shape=box]
+	APP_2 [label="APP <= 0.4593 || samples = 171"]
+		AMPKA_1 -> APP_2
+	node [shape=ellipse]
+	APP_272798 [label=" trisome || samples = 99"]
+		APP_2 -> APP_272798
+	node [shape=ellipse]
+	APP_273410 [label=" trisome || samples = 72"]
+		APP_2 -> APP_273410
+}

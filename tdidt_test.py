@@ -1,7 +1,7 @@
 import csv
 import pickle
 
-tree = pickle.load(open('trained_tree.pickle'))
+tree = pickle.load(open('output/trained_tree.pickle'))
 data = csv.reader(open('data/gene_expression_test.csv'))
 columns = None
 X = []
@@ -25,7 +25,7 @@ for row in X:
 			classified_Y.append(t['label'])
 			break
 
-		if row[t['attribute_id']] < t['threshold']:
+		if float(row[t['attribute_id']]) < t['threshold']:
 			#LEFT
 			t = t['children'][0]
 			continue
