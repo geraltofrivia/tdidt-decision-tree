@@ -5,7 +5,7 @@ import pickle
 import math
 import csv
 
-max_depth = 10
+max_depth = 3
 data = csv.reader(open('data/gene_expression_training.csv'))
 columns = None
 X = []
