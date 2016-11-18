@@ -2,7 +2,7 @@ import csv
 import pickle
 
 tree = pickle.load(open('output/trained_tree.pickle'))
-data = csv.reader(open('data/gene_expression_test.csv'))
+data = csv.reader(open('data/gene_expression_training.csv'))
 columns = None
 X = []
 Y = []
@@ -13,13 +13,15 @@ for row in data:
 		continue
 
 	x, y = row[:-1], row[-1]
-	X.append(x)
-	Y.append(y)
+	X.append([float(a) for a in x])
+	Y.append(float(y))
 
-t = tree
 classified_Y = []
 for row in X:
+	t = tree
 	while True:
+		# print t['depth'], t['name']
+		# raw_input()
 		
 		if t['name'] == 'LEAF':
 			classified_Y.append(t['label'])

@@ -5,7 +5,7 @@ import pickle
 import math
 import csv
 
-max_depth = 3
+max_depth = 10
 data = csv.reader(open('data/gene_expression_training.csv'))
 columns = None
 X = []
@@ -67,6 +67,7 @@ def split(_attribute, _class):
 		Convert a continous value attribute to discrete
 	'''
 
+
 	#Make a list of (attribute,class) tuple
 	data = sorted([ (_attribute[i],_class[i]) for i in range(len(_attribute)) ], key = lambda tup: tup[0])
 
@@ -89,13 +90,23 @@ def split(_attribute, _class):
 	#Find the split with the maximum information gain
 	best_tuple = max(split_candidates,key=lambda item:item[1])
 
+	#Computing the avg of list[i-1] and list[i] items.
+	if best_tuple[0]>0:
+		avg = (float(A[best_tuple[0]-1]) +float(A[best_tuple[0]]))/2
+	else:
+		avg = A[best_tuple[0]]
+
 	#Return the value i (left: less than i, right: more than or equal to i) and the , corresponding value of information gain
-	return [A[best_tuple[0]], best_tuple[1]]
+	return [avg, best_tuple[1]]
 
 def tdidt(_data, _class, _depth, _tree):
 
+	# if len(list(set(_class))) <= 1:
+	# 	print _data
+	# 	print _class
+	# 	raw_input()
 	#Exit condition
-	if _depth >= max_depth:
+	if _depth >= max_depth or len(list(set(_class))) <= 1:
 		_tree['name'] = "LEAF"
 		_tree['depth'] = _depth
 		_tree['samples'] = len(_class)
@@ -139,6 +150,10 @@ def tdidt(_data, _class, _depth, _tree):
 			data2.append(_data[i])
 			class2.append(_class[i])
 
+	# print len(class1)
+	# print len(class2)
+
+	
 	#Recursion follows:
 	#LEFT
 	_tree['children'].append({})
@@ -191,8 +206,8 @@ if __name__ == '__main__':
 			continue
 
 		x, y = row[:-1], row[-1]
-		X.append(x)
-		Y.append(y)
+		X.append([float(a) for a in x])
+		Y.append(float(y))
 
 	#Save the tree	
 	tdidt(X,Y,0,tree)

@@ -1,46 +1,208 @@
 digraph {
 	node [shape=box]
-	APP_0 [label="APP <= 0.399 || samples = 701"]
+	APP_0 [label="APP <= 0.39875 || samples = 701"]
 	node [shape=box]
-	pMTOR_1 [label="pMTOR <= 0.6064 || samples = 319"]
+	pMTOR_1 [label="pMTOR <= 0.60285 || samples = 319"]
 		APP_0 -> pMTOR_1
 	node [shape=box]
-	S6_2 [label="S6 <= 0.3932 || samples = 33"]
+	S6_2 [label="S6 <= 0.37635 || samples = 33"]
 		pMTOR_1 -> S6_2
 	node [shape=ellipse]
-	S6_274632 [label=" trisome || samples = 2"]
-		S6_2 -> S6_274632
+	S6_260336 [label=" healthy || samples = 2"]
+		S6_2 -> S6_260336
 	node [shape=ellipse]
-	S6_224187 [label=" trisome || samples = 31"]
-		S6_2 -> S6_224187
+	S6_279095 [label=" trisome || samples = 31"]
+		S6_2 -> S6_279095
 	node [shape=box]
-	GluR3_2 [label="GluR3 <= 0.2046 || samples = 286"]
+	GluR3_2 [label="GluR3 <= 0.2044 || samples = 286"]
 		pMTOR_1 -> GluR3_2
-	node [shape=ellipse]
-	GluR3_275282 [label=" trisome || samples = 100"]
-		GluR3_2 -> GluR3_275282
-	node [shape=ellipse]
-	GluR3_298175 [label=" trisome || samples = 186"]
-		GluR3_2 -> GluR3_298175
 	node [shape=box]
-	AMPKA_1 [label="AMPKA <= 0.385 || samples = 382"]
+	NR2B_3 [label="NR2B <= 0.4899 || samples = 100"]
+		GluR3_2 -> NR2B_3
+	node [shape=ellipse]
+	NR2B_384368 [label=" trisome || samples = 17"]
+		NR2B_3 -> NR2B_384368
+	node [shape=box]
+	APP_4 [label="APP <= 0.36865 || samples = 83"]
+		NR2B_3 -> APP_4
+	node [shape=box]
+	AMPKA_5 [label="AMPKA <= 0.3067 || samples = 47"]
+		APP_4 -> AMPKA_5
+	node [shape=ellipse]
+	AMPKA_579410 [label=" trisome || samples = 2"]
+		AMPKA_5 -> AMPKA_579410
+	node [shape=box]
+	pCASP9_6 [label="pCASP9 <= 1.6652 || samples = 45"]
+		AMPKA_5 -> pCASP9_6
+	node [shape=ellipse]
+	pCASP9_666035 [label=" healthy || samples = 40"]
+		pCASP9_6 -> pCASP9_666035
+	node [shape=box]
+	pBRAF_7 [label="pBRAF <= 0.20425 || samples = 5"]
+		pCASP9_6 -> pBRAF_7
+	node [shape=ellipse]
+	pBRAF_789479 [label=" trisome || samples = 2"]
+		pBRAF_7 -> pBRAF_789479
+	node [shape=ellipse]
+	pBRAF_71904 [label=" healthy || samples = 3"]
+		pBRAF_7 -> pBRAF_71904
+	node [shape=box]
+	BDNF_5 [label="BDNF <= 0.3045 || samples = 36"]
+		APP_4 -> BDNF_5
+	node [shape=box]
+	ERK_6 [label="ERK <= 1.5181 || samples = 15"]
+		BDNF_5 -> ERK_6
+	node [shape=ellipse]
+	ERK_634608 [label=" healthy || samples = 1"]
+		ERK_6 -> ERK_634608
+	node [shape=ellipse]
+	ERK_667943 [label=" trisome || samples = 14"]
+		ERK_6 -> ERK_667943
+	node [shape=box]
+	AKT_6 [label="AKT <= 0.86725 || samples = 21"]
+		BDNF_5 -> AKT_6
+	node [shape=box]
+	pAKT_7 [label="pAKT <= 0.2286 || samples = 18"]
+		AKT_6 -> pAKT_7
+	node [shape=ellipse]
+	pAKT_77418 [label=" trisome || samples = 1"]
+		pAKT_7 -> pAKT_77418
+	node [shape=ellipse]
+	pAKT_797612 [label=" healthy || samples = 17"]
+		pAKT_7 -> pAKT_797612
+	node [shape=ellipse]
+	AKT_68167 [label=" trisome || samples = 3"]
+		AKT_6 -> AKT_68167
+	node [shape=box]
+	S6_3 [label="S6 <= 0.4449 || samples = 186"]
+		GluR3_2 -> S6_3
+	node [shape=ellipse]
+	S6_345269 [label=" healthy || samples = 142"]
+		S6_3 -> S6_345269
+	node [shape=box]
+	PKCA_4 [label="PKCA <= 0.288 || samples = 44"]
+		S6_3 -> PKCA_4
+	node [shape=box]
+	GFAP_5 [label="GFAP <= 0.12405 || samples = 14"]
+		PKCA_4 -> GFAP_5
+	node [shape=ellipse]
+	GFAP_531439 [label=" trisome || samples = 6"]
+		GFAP_5 -> GFAP_531439
+	node [shape=ellipse]
+	GFAP_546958 [label=" healthy || samples = 8"]
+		GFAP_5 -> GFAP_546958
+	node [shape=ellipse]
+	PKCA_463488 [label=" healthy || samples = 30"]
+		PKCA_4 -> PKCA_463488
+	node [shape=box]
+	AMPKA_1 [label="AMPKA <= 0.3849 || samples = 382"]
 		APP_0 -> AMPKA_1
 	node [shape=box]
-	pNUMB_2 [label="pNUMB <= 0.3653 || samples = 211"]
+	pNUMB_2 [label="pNUMB <= 0.36505 || samples = 211"]
 		AMPKA_1 -> pNUMB_2
-	node [shape=ellipse]
-	pNUMB_219723 [label=" trisome || samples = 143"]
-		pNUMB_2 -> pNUMB_219723
-	node [shape=ellipse]
-	pNUMB_23127 [label=" trisome || samples = 68"]
-		pNUMB_2 -> pNUMB_23127
 	node [shape=box]
-	APP_2 [label="APP <= 0.4593 || samples = 171"]
+	P3525_3 [label="P3525 <= 0.23835 || samples = 143"]
+		pNUMB_2 -> P3525_3
+	node [shape=ellipse]
+	P3525_383189 [label=" healthy || samples = 2"]
+		P3525_3 -> P3525_383189
+	node [shape=ellipse]
+	P3525_369876 [label=" trisome || samples = 141"]
+		P3525_3 -> P3525_369876
+	node [shape=box]
+	BAX_3 [label="BAX <= 0.1776 || samples = 68"]
+		pNUMB_2 -> BAX_3
+	node [shape=box]
+	ARC_4 [label="ARC <= 0.11545 || samples = 37"]
+		BAX_3 -> ARC_4
+	node [shape=box]
+	pNUMB_5 [label="pNUMB <= 0.4154 || samples = 24"]
+		ARC_4 -> pNUMB_5
+	node [shape=box]
+	JNK_6 [label="JNK <= 0.323 || samples = 20"]
+		pNUMB_5 -> JNK_6
+	node [shape=ellipse]
+	JNK_645293 [label=" trisome || samples = 19"]
+		JNK_6 -> JNK_645293
+	node [shape=ellipse]
+	JNK_612026 [label=" healthy || samples = 1"]
+		JNK_6 -> JNK_612026
+	node [shape=ellipse]
+	pNUMB_565322 [label=" healthy || samples = 4"]
+		pNUMB_5 -> pNUMB_565322
+	node [shape=box]
+	BDNF_5 [label="BDNF <= 0.30845 || samples = 13"]
+		ARC_4 -> BDNF_5
+	node [shape=ellipse]
+	BDNF_55610 [label=" trisome || samples = 1"]
+		BDNF_5 -> BDNF_55610
+	node [shape=ellipse]
+	BDNF_587574 [label=" healthy || samples = 12"]
+		BDNF_5 -> BDNF_587574
+	node [shape=ellipse]
+	BAX_340511 [label=" trisome || samples = 31"]
+		BAX_3 -> BAX_340511
+	node [shape=box]
+	APP_2 [label="APP <= 0.4587 || samples = 171"]
 		AMPKA_1 -> APP_2
+	node [shape=box]
+	DYRK1A_3 [label="DYRK1A <= 0.3108 || samples = 99"]
+		APP_2 -> DYRK1A_3
+	node [shape=box]
+	pBRAF_4 [label="pBRAF <= 0.19625 || samples = 17"]
+		DYRK1A_3 -> pBRAF_4
 	node [shape=ellipse]
-	APP_272798 [label=" trisome || samples = 99"]
-		APP_2 -> APP_272798
+	pBRAF_482927 [label=" healthy || samples = 1"]
+		pBRAF_4 -> pBRAF_482927
 	node [shape=ellipse]
-	APP_273410 [label=" trisome || samples = 72"]
-		APP_2 -> APP_273410
+	pBRAF_424434 [label=" trisome || samples = 16"]
+		pBRAF_4 -> pBRAF_424434
+	node [shape=box]
+	AcetylH3K9_4 [label="AcetylH3K9 <= 0.1388 || samples = 82"]
+		DYRK1A_3 -> AcetylH3K9_4
+	node [shape=ellipse]
+	AcetylH3K9_430358 [label=" healthy || samples = 51"]
+		AcetylH3K9_4 -> AcetylH3K9_430358
+	node [shape=box]
+	SNCA_5 [label="SNCA <= 0.16715 || samples = 31"]
+		AcetylH3K9_4 -> SNCA_5
+	node [shape=box]
+	TRKA_6 [label="TRKA <= 0.9391 || samples = 26"]
+		SNCA_5 -> TRKA_6
+	node [shape=ellipse]
+	TRKA_670635 [label=" healthy || samples = 23"]
+		TRKA_6 -> TRKA_670635
+	node [shape=ellipse]
+	TRKA_655102 [label=" trisome || samples = 3"]
+		TRKA_6 -> TRKA_655102
+	node [shape=ellipse]
+	SNCA_596930 [label=" trisome || samples = 5"]
+		SNCA_5 -> SNCA_596930
+	node [shape=box]
+	BRAF_3 [label="BRAF <= 0.48885 || samples = 72"]
+		APP_2 -> BRAF_3
+	node [shape=box]
+	pNR2A_4 [label="pNR2A <= 1.15495 || samples = 58"]
+		BRAF_3 -> pNR2A_4
+	node [shape=ellipse]
+	pNR2A_418404 [label=" trisome || samples = 57"]
+		pNR2A_4 -> pNR2A_418404
+	node [shape=ellipse]
+	pNR2A_466873 [label=" healthy || samples = 1"]
+		pNR2A_4 -> pNR2A_466873
+	node [shape=box]
+	pJNK_4 [label="pJNK <= 0.3444 || samples = 14"]
+		BRAF_3 -> pJNK_4
+	node [shape=box]
+	pCREB_5 [label="pCREB <= 0.27205 || samples = 7"]
+		pJNK_4 -> pCREB_5
+	node [shape=ellipse]
+	pCREB_561138 [label=" trisome || samples = 6"]
+		pCREB_5 -> pCREB_561138
+	node [shape=ellipse]
+	pCREB_575209 [label=" healthy || samples = 1"]
+		pCREB_5 -> pCREB_575209
+	node [shape=ellipse]
+	pJNK_473543 [label=" healthy || samples = 7"]
+		pJNK_4 -> pJNK_473543
 }
