@@ -2,7 +2,7 @@ import csv
 import pickle
 
 tree = pickle.load(open('output/trained_tree.pickle'))
-data = csv.reader(open('data/gene_expression_training.csv'))
+data = csv.reader(open('data/gene_expression_test.csv'))
 columns = None
 X = []
 Y = []

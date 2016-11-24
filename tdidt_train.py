@@ -119,9 +119,6 @@ def tdidt(_data, _class, _depth, _tree):
 	for i in range(len(_data[0])):
 		best_attr_candidates.append(split([x[i] for x in _data],_class)+[i])
 
-	# pprint(best_attr_candidates)
-	# raw_input()
-
 	#Best attribute, based on the maximum information gain
 	best_attr = max(best_attr_candidates,key=lambda item:item[1])
 	#Format: threshold, information gain, attribute number
@@ -149,10 +146,6 @@ def tdidt(_data, _class, _depth, _tree):
 			#right node
 			data2.append(_data[i])
 			class2.append(_class[i])
-
-	# print len(class1)
-	# print len(class2)
-
 	
 	#Recursion follows:
 	#LEFT
@@ -185,8 +178,6 @@ def visualizing_traversal(node, parent_name, tree_visualized):
 	tree_visualized.attr('node', shape='box')
 	#create the unique identifier
 	name = node['name']+'_'+str(node['depth'])
-	# pprint(node)
-	# raw_input()
 	label = '''%(property_name)s <= %(threshold)s || samples = %(samples)d''' % {'property_name': node['name'],'threshold':str(node['threshold']),'samples':node['samples']}
 	tree_visualized.node(name = name, label = label)
 
